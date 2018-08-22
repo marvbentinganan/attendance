@@ -1,5 +1,5 @@
 @extends('layouts.auth')
-@section('title') {{ config('app.name') }} | Register
+@section('title') Register
 @endsection
 
 @section('content')
@@ -8,7 +8,7 @@
         <div class="ui huge blue header">{{ config('app.name') }}
             <div class="ui sub header">Register</div>
         </div>
-        <form action="" method="POST" class="ui form">
+        <form action="{{ route('register') }}" method="POST" class="ui form">
             @csrf
             <div class="field">
                 <div class="ui right icon input">
@@ -42,7 +42,7 @@
             </div>
             <div class="field">
                 <div class="ui right icon input">
-                    <input type="password" id="confirm" name="confirm" placeholder="Confirm Password">
+                    <input type="password" id="password-confirm" name="password_confirmation" placeholder="Confirm Password" required>
                     <i class="ion-locked icon"></i>
                 </div>
             </div>
@@ -95,8 +95,8 @@
                     prompt : 'Please provide a password'
                 }]
             },
-            confirm: {
-                identifier: 'confirm',
+            password_confirmation: {
+                identifier: 'password-confirm',
                 rules: [{
                     type : 'match[password]',
                     prompt : 'Passwords do not match'
@@ -106,8 +106,6 @@
         on: 'blur',
         inline: true
     });
-
 </script>
-
 
 @endpush

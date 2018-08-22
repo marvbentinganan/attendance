@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title')</title>
+    <title>{{ config('app.name') }} | @yield('title')</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/semantic-ui/semantic.min.css') }}" rel="stylesheet">

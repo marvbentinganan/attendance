@@ -9,7 +9,10 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0",
-        "laravolt/semantic-form": "^1.10"
+        "laravolt/semantic-form": "^1.10",
+        "maatwebsite/excel": "^2.1",
+        "appstract/laravel-blade-directives": "^0.7.1",
+        "phpoffice/phpspreadsheet": "^1.1"
     },
     "require-dev": {
         "filp/whoops": "^2.0",

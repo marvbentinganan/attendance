@@ -12,21 +12,30 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+    <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
     @stack('header_scripts')
 
     <!-- Fonts -->
 
     <!-- Styles -->
     <link href="{{ asset('css/semantic-ui/semantic.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('plugins/ionicons/css/ionicons.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('plugins/toastr/css/toastr.min.css') }}" rel="stylesheet">
 </head>
 
 <body>
-    <div id="app">
+    <div id="app" style="padding-top: 20px;">
     @include('partials.main_navigation')
-        <div class="ui stackable grid container">
-            <div class="sixteen wide column">
+        <div class="ui stackable very padded grid">
+            <div class="three wide computer only four wide tablet only column">
+                @yield('left')
+            </div>
+            <div class="sixteen wide mobile only nine wide computer only twelve wide tablet only column">
                 @yield('content')
+            </div>
+            <div class="four wide computer only column">
+                @yield('right')
             </div>
         </div>
     </div>

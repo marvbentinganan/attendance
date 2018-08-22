@@ -80,7 +80,7 @@
 
         <div class="content">
             <div class="title m-b-md">
-                Laravel 5.6 + Semantic UI
+                {{ config('app.name') }}
             </div>
         </div>
     </div>

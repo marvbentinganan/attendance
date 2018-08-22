@@ -3,7 +3,7 @@
     <div class="link item" onclick="showMenu()">
         <a><i class="large bars icon"></i></a>
     </div> --}}
-    <a href="{{ url('/') }}" class="header item">
+    <a href="{{ url('/home') }}" class="header item">
         <img src="{{ asset('images/logo.png')}}" alt="" class="ui avatar image">
           {{ config('app.name') }}
     </a>
