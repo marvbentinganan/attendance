@@ -11,7 +11,9 @@ class Event extends Model
 
     protected $fillable = ['name', 'slug', 'description', 'from', 'to', 'user_id', 'updated_by'];
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'from', 'to'];
+
+    protected $appends = ['duration'];
 
     public function user()
     {
@@ -26,6 +28,11 @@ class Event extends Model
     public function attendances()
     {
         return $this->hasMany(Attendance::class);
+    }
+
+    public function getDurationAttribute()
+    {
+        return $this->to->diffInDays($this->from) + 1;
     }
 
     public function getRouteKeyName()

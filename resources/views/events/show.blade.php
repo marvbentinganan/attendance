@@ -1,27 +1,27 @@
-@extends('layouts.app')
-@push('header_scripts')
-    <script src="{{ asset('plugins/vuejs/vue.js') }}"></script>
+@extends('layouts.app') @push('header_scripts')
+<script src="{{ asset('plugins/vuejs/vue.js') }}"></script>
+
 @endpush
-@section('left')
-    {{-- @include('partials.left-menu') --}}
-    <div class="ui top attached header"><i class="ion-calendar icon"></i>Event Details</div>
-    <div class="ui attached segment">
-        <div class="ui centered sub header">
-            {{ $event->name }}
-        </div>
-        <p>
-            {{ $event->description }}
-        </p>
-        <div class="ui hidden divider"></div>
-        <div class="ui item list">
-            <div class="item"><i class="calendar icon"></i> From: {{ $event->from->toFormattedDateString() }}</div>
-            <div class="item"><i class="calendar icon"></i> To: {{ $event->to->toFormattedDateString() }}</div>
-        </div>
+@section('left') {{--
+    @include('partials.left-menu') --}}
+<div class="ui top attached header"><i class="ion-calendar icon"></i>Event Details</div>
+<div class="ui attached segment">
+    <div class="ui centered sub header">
+        {{ $event->name }}
     </div>
+    <p>
+        {{ $event->description }}
+    </p>
+    <div class="ui hidden divider"></div>
+    <div class="ui item list">
+        <div class="item"><i class="calendar icon"></i> From: {{ $event->from->toFormattedDateString() }}</div>
+        <div class="item"><i class="calendar icon"></i> To: {{ $event->to->toFormattedDateString() }}</div>
+    </div>
+</div>
 @endsection
 
-@section('content')
-{{-- <div class="ui top attached large breadcrumb segment">
+@section('content') {{--
+<div class="ui top attached large breadcrumb segment">
     <a href="{{ url('/home') }}" class="section"><i class="home icon"></i>Home</a>
     <div class="divider"><i class="blue ion-chevron-right icon"></i></div>
     <a href="{{ route('events') }}" class="section">Events</a>
@@ -87,27 +87,27 @@
 @endsection
 
 @section('right')
-    <div class="ui top attached header"><i class="ion-person icon"></i>Recent Attendees</div>
-    <div class="ui attached segment">
-        <div class="ui small feed">
-            <div v-for="attendee in attendees" class="event">
-                <div class="label">
-                    <img src="{{ asset('images/avatar.jpg') }}" alt="">
-                </div>
-                <div class="content">
-                    <div class="summary">
-                        <a href="" class="user">@{{ attendee.student.firstname }} @{{ attendee.student.lastname }}</a>
-                        <div class="date">@{{ attendee.recorded_at }}</div>
-                    </div>
+<div class="ui top attached header"><i class="ion-person icon"></i>Recent Attendees</div>
+<div class="ui attached segment">
+    <div class="ui small feed">
+        <div v-for="attendee in attendees" class="event">
+            <div class="label">
+                <img src="{{ asset('images/avatar.jpg') }}" alt="">
+            </div>
+            <div class="content">
+                <div class="summary">
+                    <a href="" class="user">@{{ attendee.student.firstname }} @{{ attendee.student.lastname }}</a>
+                    <div class="date">@{{ attendee.recorded_at }}</div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 @endsection
-@push('footer_scripts')
+ @push('footer_scripts')
 <script src="{{ asset('plugins/axios/axios.min.js') }}"></script>
 <script>
-	new Vue({
+    new Vue({
 		el: '#app',
 		data: {
 			query : {
@@ -169,10 +169,11 @@
          },
          created() {
          	this.init();
-            setInterval(function (){
-                this.getAttendees();
-            }.bind(this), 30000);
+            // setInterval(function (){
+            //    this.getAttendees();
+            // }.bind(this), 30000);
          }
       });
-   </script>
+</script>
+
 @endpush

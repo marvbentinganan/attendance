@@ -70,10 +70,10 @@ class UserController extends Controller
             $id_now = $request->id_number;
             $group_id = 1;
         }
-        
+
         $student = Student::create([
-            'id_number' => $request->id_number,
-            'id_now' => $id_now,
+            'id_number' => strtoupper($request->id_number),
+            'id_now' => strtoupper($id_now),
             'firstname' => ucwords($request->firstname),
             'middlename' => ucwords($request->middlename),
             'lastname' => ucwords($request->lastname),

@@ -13,7 +13,7 @@ class Attendance extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $appends = ['recorded_at', 'day'];
+    protected $appends = ['recorded_at', 'day', 'points'];
 
     protected $with = ['student'];
 
@@ -27,21 +27,25 @@ class Attendance extends Model
         return $this->belongsTo(Event::class);
     }
 
-    public function getRecordedAtAttribute(){
-        if($this->updated_at != null){
-            return $this->updated_at->diffForHumans();    
+    public function getRecordedAtAttribute()
+    {
+        if ($this->updated_at != null) {
+            return $this->updated_at->diffForHumans();
         }
         return $this->created_at->diffForHumans();
     }
 
-    public function getDayAttribute(){
-        return $this->created_at->toFormattedDateString(); 
+    public function getDayAttribute()
+    {
+        return $this->created_at->toFormattedDateString();
     }
 
-    public function morning(){
-        if($this->morning == true){
-            return '<i class="green check icon"></i>';
+    public function getPointsAttribute()
+    {
+        if ($this->morning and $this->afternoon == true) {
+            return 1;
+        } elseif ($this->morning or $this->afternoon == false) {
+            return 0.5;
         }
-        return '<i class="red remove icon"></i>';
     }
 }

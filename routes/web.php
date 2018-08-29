@@ -32,9 +32,16 @@ Route::middleware('auth')->group(function () {
         Route::get('list', 'UserController@list')->name('students.list');
     });
 
-    Route::prefix('attendance')->group(function(){
-    	Route::post('record/{event}', 'AttendanceController@store')->name('attendance.record');
-    	Route::get('attendees/{event}', 'AttendanceController@attendees')->name('attendance.attendees');
-    	Route::get('recent/{event}', 'AttendanceController@recent')->name('attendance.recent');
+    Route::prefix('attendance')->group(function () {
+        Route::post('record/{event}', 'AttendanceController@store')->name('attendance.record');
+        Route::get('attendees/{event}', 'AttendanceController@attendees')->name('attendance.attendees');
+        Route::get('recent/{event}', 'AttendanceController@recent')->name('attendance.recent');
+    });
+
+    Route::prefix('reports')->group(function () {
+        Route::get('index', 'ReportController@index')->name('reports');
+        Route::get('{event}', 'ReportController@attendance')->name('event.attendance');
+        Route::get('{event}/attendees', 'ReportController@attendees')->name('event.attendees');
+        Route::get('{event}/{student}', 'ReportController@record')->name('event.record');
     });
 });

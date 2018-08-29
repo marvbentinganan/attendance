@@ -11,6 +11,7 @@
                 <div class="meta">
                     <span class="date"><i class="ion-calendar icon"></i>From : {{ $event->from->toFormattedDateString() }}</span>
                     <span class="date"><i class="ion-calendar icon"></i>To : {{ $event->to->toFormattedDateString() }}</span>
+                    <span class="date">{{ $event->duration }} days</span>
                 </div>
                 <div class="description">
                     {{ $event->description }}

@@ -8,7 +8,7 @@
     <a href="{{ route('students') }}" class="item">
         <i class="ion-person-stalker icon"></i>Students
     </a>
-    <a href="" class="item">
+    <a href="{{ route('reports') }}" class="item">
         <i class="ion-podium icon"></i>Reports
     </a>
     <a href="" class="item">
