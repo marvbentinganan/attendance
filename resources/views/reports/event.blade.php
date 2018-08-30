@@ -1,12 +1,11 @@
 @extends('layouts.app') @push('header_scripts')
 <script src="{{ asset('plugins/vuejs/vue.js') }}"></script>
 
-
-@endpush
+@endpush 
 @section('left')
     @include('partials.left-menu')
 @endsection
-
+ 
 @section('content')
 <div class="ui top attached large breadcrumb segment">
     <a href="{{ url('/home') }}" class="section"><i class="home icon"></i>Home</a>
@@ -18,10 +17,15 @@
 <div class="ui hidden divider"></div>
 <div class="ui centered header">List of Attendees for {{ $event->name }}</div>
 <div class="ui top attached segment">
-    <div class="ui fluid icon input">
-        <input type="text" name="keyword" v-model="keyword" id="" placeholder="Search for Student...">
-        <i class="inverted circular search icon"></i>
+    <div class="ui fluid action input">
+        <input type="text" name="keyword" v-model="keyword" id="" placeholder="Search for Student (Case Sensitive)...">
+        <select class="ui compact selection dropdown" v-model="filter">
+            <option value="id">ID Number</option>
+            <option value="firstname">Firstname</option>
+            <option value="lastname">Lastname</option>
+        </select>
     </div>
+
 </div>
 <table class="ui attached unstackable compact celled table">
     <thead>
@@ -40,7 +44,7 @@
     </tbody>
 </table>
 @endsection
-
+ 
 @section('right')
 <div class="ui raised card" v-if="records != null">
     <div class="image">
@@ -83,6 +87,7 @@
     new Vue({
 		el: '#app',
 		data: {
+            filter : 'id',
             keyword : '',
             attendees : {
                 firstname : '',
@@ -98,11 +103,24 @@
         computed : {
             filteredAttendees(){
                 let attendees = this.attendees
-                if (this.keyword && this.keyword != null) {
+                if (this.keyword && this.keyword != null && this.filter == 'id') {
                     attendees = attendees.filter((attendee) => {
                         return attendee.id_now.indexOf(this.keyword) !== -1
                     })
                 }
+
+                if (this.keyword && this.keyword != null && this.filter == 'firstname') { 
+                    attendees = attendees.filter((attendee) => { 
+                        return attendee.firstname.indexOf(this.keyword) !== -1 
+                    }) 
+                }
+
+                if (this.keyword && this.keyword != null && this.filter == 'lastname') { 
+                    attendees = attendees.filter((attendee) => { 
+                        return attendee.lastname.indexOf(this.keyword) !== -1 
+                    }) 
+                }
+                
                 return attendees
             }
         },
@@ -142,7 +160,19 @@
             // }.bind(this), 30000);
          }
       });
+    $('.dropdown').dropdown();
 
 </script>
+
+
+
+
+
+
+
+
+
+
+
 
 @endpush
