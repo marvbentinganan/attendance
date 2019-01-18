@@ -19,8 +19,8 @@
                 <div class="extra">
                     <div class="ui three mini buttons">
                         <a href="{{ route('event.show', $event->slug) }}" class="ui mini blue icon button"><i class="ion-share icon"></i> Open</a>
-                        <button class="ui mini teal icon button"><i class="ion-edit icon"></i> Update</button>
-                        <button class="ui mini red icon button"><i class="ion-trash-a icon"></i> Delete</button>
+                        <a href="{{ route('event.edit', $event->slug) }}" class="ui mini teal icon button"><i class="ion-edit icon"></i> Update</a>
+                        <button class="ui mini red icon button" onclick="destroy('{{ $event->slug }}')"><i class="ion-trash-a icon"></i> Delete</button>
                     </div>
                 </div>
             </div>

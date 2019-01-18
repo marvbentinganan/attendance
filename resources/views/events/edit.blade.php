@@ -1,13 +1,15 @@
-@extends('layouts.app')
+@extends('layouts.app') 
 @section('left')
-@include('partials.left-menu')
+    @include('partials.left-menu')
 @endsection
-
+ 
 @section('content')
 <div class="ui top attached large breadcrumb segment">
     <a href="{{ url('/home') }}" class="section"><i class="home icon"></i>Home</a>
     <div class="divider"><i class="blue ion-chevron-right icon"></i></div>
     <a href="{{ route('events') }}" class="section">Events</a>
+    <div class="divider"><i class="blue ion-chevron-right icon"></i></div>
+    <a href="{{ route('event.show', $event->slug) }}" class="section">{{ $event->name }}</a>
 </div>
 <div class="ui attached segment">
     <form method="POST" id="event-form" class="ui form">
@@ -15,13 +17,13 @@
         <div class="field">
             <label for="name">Name of Event</label>
             <div class="ui left icon input">
-                <input type="text" name="name" id="name" value="{{ old('name') }}">
+                <input type="text" name="name" id="name" value="{{ $event->name }}">
                 <i class="ion-calendar icon"></i>
             </div>
         </div>
         <div class="field">
             <label for="description">Description of Event</label>
-            <textarea name="description" id="description" cols="30" rows="5">{{ old('description') }}</textarea>
+            <textarea name="description" id="description" cols="30" rows="5">{{ $event->description }}</textarea>
         </div>
         <div class="two fields">
             <div class="field">
@@ -29,7 +31,7 @@
                 <div class="ui calendar" id="rangestart">
                     <div class="ui input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" name="from" placeholder="Start">
+                        <input type="text" name="from" placeholder="Start" value="{{ $event->from }}">
                     </div>
                 </div>
             </div>
@@ -38,7 +40,7 @@
                 <div class="ui calendar" id="rangeend">
                     <div class="ui input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" name="to" placeholder="End">
+                        <input type="text" name="to" placeholder="End" value="{{ $event->to }}">
                     </div>
                 </div>
             </div>
@@ -51,7 +53,7 @@
                     <div class="ui calendar" id="from_morning">
                         <div class="ui input left icon">
                             <i class="ion-clock icon"></i>
-                            <input type="text" name="from_morning" placeholder="From">
+                            <input type="text" name="from_morning" placeholder="From" value="{{ $event->control->from_morning }}">
                         </div>
                     </div>
                 </div>
@@ -62,7 +64,7 @@
                     <div class="ui calendar" id="to_morning">
                         <div class="ui input left icon">
                             <i class="ion-clock icon"></i>
-                            <input type="text" name="to_morning" placeholder="To">
+                            <input type="text" name="to_morning" placeholder="To" value="{{ $event->control->to_morning }}">
                         </div>
                     </div>
                 </div>
@@ -75,7 +77,7 @@
                     <div class="ui calendar" id="from_afternoon">
                         <div class="ui input left icon">
                             <i class="ion-clock icon"></i>
-                            <input type="text" name="from_afternoon" placeholder="From">
+                            <input type="text" name="from_afternoon" placeholder="From" value="{{ $event->control->from_afternoon }}">
                         </div>
                     </div>
                 </div>
@@ -86,30 +88,26 @@
                     <div class="ui calendar" id="to_afternoon">
                         <div class="ui input left icon">
                             <i class="ion-clock icon"></i>
-                            <input type="text" name="to_afternoon" placeholder="To">
+                            <input type="text" name="to_afternoon" placeholder="To" value="{{ $event->control->to_afternoon }}">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="field">
-            <button type="submit" class="ui primary submit icon button"><i class="ion-calendar icon"></i> Add Event</button>
+            <button type="submit" class="ui primary submit icon button"><i class="ion-calendar icon"></i> Update Event</button>
         </div>
     </form>
 </div>
 @endsection
-
+ 
 @section('right')
-    <div id="event-container">
 
-    </div>
 @endsection
 @push('footer_scripts')
 <script src="{{ asset('js/semantic-ui/calendar.min.js') }}"></script>
 <script src="{{ asset('plugins/axios/axios.min.js') }}"></script>
 <script>
-    getEvents();
-
     $('#rangestart').calendar({
         type: 'date',
         endCalendar: $('#rangeend'),
@@ -146,12 +144,10 @@
 
     $('#event-form').submit(function(event){
         event.preventDefault();
-        var route = '{{  route('event.add') }}';
+        var route = '{{  route('event.update', $event->slug) }}';
         var data = $('#event-form').serialize();
         axios.post(route, data)
         .then(response => {
-            $('.form')[0].reset('form');
-            getEvents(),
             toastr.success(response.data);
         })
         .catch(error => {
@@ -159,39 +155,6 @@
         })
     });
 
-    function getEvents(){
-        axios.get('{{ route('events.list') }}')
-        .then(response => {
-            $('#event-container').html(response.data);
-        })
-        .catch(error => {
-            console.log(error.response.data);
-        })
-    }
-
-    function destroy(id)
-    {
-        swal({ 
-            title: 'Are you sure?', 
-            text: "This Event and other data related to it will be Deleted", 
-            type: 'question', 
-            showCancelButton: true, 
-            confirmButtonColor: '#3085d6', 
-            cancelButtonColor: '#d33', 
-            confirmButtonText: 'Yes' 
-        })
-        .then((result) => { 
-            if (result.value) { 
-                var route = 'delete/' + id; 
-                axios.get(route) 
-                .then(response => {
-                    getEvents(),
-                    swal({ type: 'success', title: response.data, showConfirmButton: false, timer: 1500 });
-                })
-                .catch(response => { 
-                    swal({ type: 'error', title: error.response.data, showConfirmButton: false, timer: 1500 });
-                }); 
-            } }) 
-    }
 </script>
+
 @endpush

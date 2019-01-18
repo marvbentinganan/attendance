@@ -23,6 +23,9 @@ Route::middleware('auth')->group(function () {
         Route::post('add', 'EventController@store')->name('event.add');
         Route::get('list', 'EventController@list')->name('events.list');
         Route::get('show/{event}', 'EventController@show')->name('event.show');
+        Route::get('edit/{event}', 'EventController@edit')->name('event.edit');
+        Route::post('update/{event}', 'EventController@update')->name('event.update');
+        Route::get('delete/{event}', 'EventController@destroy')->name('event.delete');
     });
 
     Route::prefix('students')->group(function () {
